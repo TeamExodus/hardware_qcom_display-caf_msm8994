@@ -29,7 +29,6 @@
 #include "hwc_copybit.h"
 #include "hwc_virtual.h"
 #include "sync/sync.h"
-#include <utils/Trace.h>
 
 #define HWCVIRTUAL_LOG 0
 
@@ -69,7 +68,6 @@ void HWCVirtualVDS::destroy(hwc_context_t *ctx, size_t /*numDisplays*/,
 
 int HWCVirtualVDS::prepare(hwc_composer_device_1 *dev,
         hwc_display_contents_1_t *list) {
-    ATRACE_CALL();
     //XXX: Fix when framework support is added
     hwc_context_t* ctx = (hwc_context_t*)(dev);
     const int dpy = HWC_DISPLAY_VIRTUAL;
@@ -133,7 +131,6 @@ int HWCVirtualVDS::prepare(hwc_composer_device_1 *dev,
 }
 
 int HWCVirtualVDS::set(hwc_context_t *ctx, hwc_display_contents_1_t *list) {
-    ATRACE_CALL();
     int ret = 0;
     const int dpy = HWC_DISPLAY_VIRTUAL;
 
@@ -229,9 +226,11 @@ void HWCVirtualVDS::setMDPScalingMode(hwc_context_t* ctx,
     if((getWidth(ohnd) != alW) || (getHeight(ohnd) != alH)) {
         scalingMode = true;
     }
+
     ctx->dpyAttr[dpy].mMDPScalingMode = scalingMode;
 
     ALOGD_IF(HWCVIRTUAL_LOG, "%s fb(%dx%d) outputBuffer(%dx%d) scalingMode=%d",
             __FUNCTION__, alW, alH,
             getWidth(ohnd), getHeight(ohnd), scalingMode);
+
 }
