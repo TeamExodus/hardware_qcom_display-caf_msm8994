@@ -112,7 +112,6 @@ bool HWCursor::free(const int fd) {
 
 bool HWCursor::setCursor(const int fd) {
     bool ret = true;
-    ATRACE_CALL();
     fb_cursor *cursor = &mfbCursor;
 
     if(fd <= 0) {

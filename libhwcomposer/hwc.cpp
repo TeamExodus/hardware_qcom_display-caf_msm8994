@@ -461,7 +461,6 @@ static int hwc_setCursorPositionAsync(struct hwc_composer_device_1* dev,
     switch(dpy) {
         case HWC_DISPLAY_PRIMARY:
         {
-            ATRACE_CALL();
             HWCursor* hwCursor = HWCursor::getInstance();
             ctx->mDrawLock.lock();
             if (hwCursor->isCursorSet() &&

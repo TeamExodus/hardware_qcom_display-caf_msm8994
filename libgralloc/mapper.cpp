@@ -15,7 +15,6 @@
  * limitations under the License.
  */
 
-#define ATRACE_TAG (ATRACE_TAG_GRAPHICS | ATRACE_TAG_HAL)
 #include <limits.h>
 #include <errno.h>
 #include <pthread.h>
@@ -30,7 +29,6 @@
 
 #include <cutils/log.h>
 #include <cutils/atomic.h>
-#include <utils/Trace.h>
 
 #include <hardware/hardware.h>
 #include <hardware/gralloc.h>
@@ -58,7 +56,6 @@ static IMemAlloc* getAllocator(int flags)
 static int gralloc_map(gralloc_module_t const* module,
                        buffer_handle_t handle)
 {
-    ATRACE_CALL();
     if(!module)
         return -EINVAL;
 
@@ -105,7 +102,6 @@ static int gralloc_map(gralloc_module_t const* module,
 static int gralloc_unmap(gralloc_module_t const* module,
                          buffer_handle_t handle)
 {
-    ATRACE_CALL();
     int err = -EINVAL;
     if(!module)
         return err;
@@ -149,7 +145,6 @@ static pthread_mutex_t sMapLock = PTHREAD_MUTEX_INITIALIZER;
 int gralloc_register_buffer(gralloc_module_t const* module,
                             buffer_handle_t handle)
 {
-    ATRACE_CALL();
     if (!module || private_handle_t::validate(handle) < 0)
         return -EINVAL;
 
@@ -172,7 +167,6 @@ int gralloc_register_buffer(gralloc_module_t const* module,
 int gralloc_unregister_buffer(gralloc_module_t const* module,
                               buffer_handle_t handle)
 {
-    ATRACE_CALL();
     if (!module || private_handle_t::validate(handle) < 0)
         return -EINVAL;
 
@@ -188,7 +182,6 @@ int gralloc_unregister_buffer(gralloc_module_t const* module,
 int terminateBuffer(gralloc_module_t const* module,
                     private_handle_t* hnd)
 {
-    ATRACE_CALL();
     if(!module)
         return -EINVAL;
 
@@ -204,7 +197,6 @@ int terminateBuffer(gralloc_module_t const* module,
 static int gralloc_map_and_invalidate (gralloc_module_t const* module,
                                        buffer_handle_t handle, int usage)
 {
-    ATRACE_CALL();
     if (!module || private_handle_t::validate(handle) < 0)
         return -EINVAL;
 
@@ -246,7 +238,6 @@ int gralloc_lock(gralloc_module_t const* module,
                  int /*l*/, int /*t*/, int /*w*/, int /*h*/,
                  void** vaddr)
 {
-    ATRACE_CALL();
     private_handle_t* hnd = (private_handle_t*)handle;
     int err = gralloc_map_and_invalidate(module, handle, usage);
     if(!err)
@@ -259,7 +250,6 @@ int gralloc_lock_ycbcr(gralloc_module_t const* module,
                  int /*l*/, int /*t*/, int /*w*/, int /*h*/,
                  struct android_ycbcr *ycbcr)
 {
-    ATRACE_CALL();
     private_handle_t* hnd = (private_handle_t*)handle;
     int err = gralloc_map_and_invalidate(module, handle, usage);
     if(!err)
@@ -270,7 +260,6 @@ int gralloc_lock_ycbcr(gralloc_module_t const* module,
 int gralloc_unlock(gralloc_module_t const* module,
                    buffer_handle_t handle)
 {
-    ATRACE_CALL();
     if (!module || private_handle_t::validate(handle) < 0)
         return -EINVAL;
 
